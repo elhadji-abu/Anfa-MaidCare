@@ -120,10 +120,11 @@ export default function ServiceRequestModal({ isOpen, onClose, defaultCategory =
   };
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('Phone changed:', e.target.value);
+    const value = e.target.value;
+    console.log('Phone changed:', value, 'Length:', value.length);
     setFormData(prev => ({
       ...prev,
-      customerPhone: e.target.value
+      customerPhone: value
     }));
   };
 
@@ -166,11 +167,20 @@ export default function ServiceRequestModal({ isOpen, onClose, defaultCategory =
                 type="text"
                 value={formData.customerPhone}
                 onChange={handlePhoneChange}
+                onKeyDown={(e) => console.log('Key pressed:', e.key)}
+                onKeyPress={(e) => console.log('Key press:', e.key)}
                 placeholder="+254 7XX XXX XXX"
                 required
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm mt-2"
-                autoComplete="tel"
-                inputMode="tel"
+                style={{
+                  height: '40px',
+                  width: '100%',
+                  border: '1px solid #ccc',
+                  borderRadius: '4px',
+                  padding: '8px 12px',
+                  marginTop: '8px',
+                  fontSize: '14px'
+                }}
+                autoComplete="off"
               />
             </div>
           </div>
