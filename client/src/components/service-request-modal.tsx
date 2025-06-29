@@ -112,9 +112,18 @@ export default function ServiceRequestModal({ isOpen, onClose, defaultCategory =
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    console.log('Input changed:', e.target.name, e.target.value);
     setFormData(prev => ({
       ...prev,
       [e.target.name]: e.target.value
+    }));
+  };
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('Phone changed:', e.target.value);
+    setFormData(prev => ({
+      ...prev,
+      customerPhone: e.target.value
     }));
   };
 
@@ -151,15 +160,15 @@ export default function ServiceRequestModal({ isOpen, onClose, defaultCategory =
             </div>
             <div>
               <Label htmlFor="customerPhone" className="text-sm font-semibold text-gray-700">Phone Number</Label>
-              <Input
+              <input
                 id="customerPhone"
                 name="customerPhone"
                 type="text"
                 value={formData.customerPhone}
-                onChange={handleChange}
+                onChange={handlePhoneChange}
                 placeholder="+254 7XX XXX XXX"
                 required
-                className="mt-2"
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm mt-2"
                 autoComplete="tel"
                 inputMode="tel"
               />
