@@ -21,8 +21,8 @@ function createProjectZip() {
   archive.pipe(output);
 
   // Add all project files except node_modules and other unnecessary directories
-  const excludeDirs = ['node_modules', '.git', 'dist', '.replit', 'attached_assets'];
-  const excludeFiles = ['.env', '.env.local', 'maidcare-pro-project.zip'];
+  const excludeDirs = ['node_modules', '.git', 'dist', '.replit'];
+  const excludeFiles = ['.env', '.env.local', 'maidcare-pro-project.zip', 'maidcare-pro-project-with-guide.zip', 'download-project.js'];
 
   function addDirectory(dirPath, zipPath = '') {
     const items = fs.readdirSync(dirPath);
@@ -47,14 +47,6 @@ function createProjectZip() {
 
   // Add all project files
   addDirectory('.');
-  
-  // Add package files
-  if (fs.existsSync('package.json')) {
-    archive.file('package.json', { name: 'package.json' });
-  }
-  if (fs.existsSync('package-lock.json')) {
-    archive.file('package-lock.json', { name: 'package-lock.json' });
-  }
 
   archive.finalize();
 }
