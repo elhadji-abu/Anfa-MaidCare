@@ -16,8 +16,8 @@ export default function HeroSection() {
     <>
       <section id="home" className="hero-bg pt-16 pb-20">
         <div className="container mx-auto px-4 py-20">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="fade-in">
+          <div className="grid md:grid-cols-2 gap-12 items-stretch min-h-[600px]">
+            <div className="fade-in flex flex-col justify-center">
               <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
                 Professional Home <span className="text-primary">Maid Services</span> in Garissa
               </h1>
@@ -44,11 +44,12 @@ export default function HeroSection() {
               </div>
             </div>
             
-            <div className="fade-in">
+            <div className="fade-in flex items-center">
               <img 
                 src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
                 alt="Professional woman cleaning house with cleaning supplies" 
-                className="rounded-2xl shadow-2xl w-full h-auto transform hover:scale-105 transition duration-500"
+                className="rounded-2xl shadow-2xl w-full h-full object-cover transform hover:scale-105 transition duration-500"
+                style={{ minHeight: "500px", maxHeight: "600px" }}
               />
             </div>
           </div>
