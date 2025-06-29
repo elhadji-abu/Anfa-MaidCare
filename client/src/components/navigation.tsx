@@ -48,6 +48,12 @@ export default function Navigation() {
                 Services
               </button>
               <button
+                onClick={() => scrollToSection('reviews')}
+                className="text-gray-700 hover:text-primary transition duration-300"
+              >
+                Reviews
+              </button>
+              <button
                 onClick={() => scrollToSection('contact')}
                 className="text-gray-700 hover:text-primary transition duration-300"
               >
@@ -93,6 +99,12 @@ export default function Navigation() {
                   className="block w-full text-left px-3 py-2 text-gray-700 hover:bg-gray-100 rounded"
                 >
                   Services
+                </button>
+                <button
+                  onClick={() => scrollToSection('reviews')}
+                  className="block w-full text-left px-3 py-2 text-gray-700 hover:bg-gray-100 rounded"
+                >
+                  Reviews
                 </button>
                 <button
                   onClick={() => scrollToSection('contact')}
