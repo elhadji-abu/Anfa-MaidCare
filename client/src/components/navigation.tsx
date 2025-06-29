@@ -24,7 +24,7 @@ export default function Navigation() {
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-2">
               <Home className="text-primary w-8 h-8" />
-              <span className="text-xl font-bold text-gray-800">MaidCare Pro</span>
+              <span className="text-xl font-bold text-gray-800">Anfa MaidCare</span>
             </div>
             
             {/* Desktop Menu */}

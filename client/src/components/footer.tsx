@@ -8,7 +8,7 @@ export default function Footer() {
           <div>
             <div className="flex items-center space-x-2 mb-4">
               <Home className="text-primary w-8 h-8" />
-              <span className="text-xl font-bold">MaidCare Pro</span>
+              <span className="text-xl font-bold">Anfa MaidCare</span>
             </div>
             <p className="text-gray-400">
               Your trusted partner for professional home services in Garissa.
