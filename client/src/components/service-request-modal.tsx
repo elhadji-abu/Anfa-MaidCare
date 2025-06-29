@@ -154,12 +154,14 @@ export default function ServiceRequestModal({ isOpen, onClose, defaultCategory =
               <Input
                 id="customerPhone"
                 name="customerPhone"
-                type="tel"
+                type="text"
                 value={formData.customerPhone}
                 onChange={handleChange}
                 placeholder="+254 7XX XXX XXX"
                 required
                 className="mt-2"
+                autoComplete="tel"
+                inputMode="tel"
               />
             </div>
           </div>
