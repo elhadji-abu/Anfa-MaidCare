@@ -33,6 +33,8 @@ export default function ServiceRequestModal({ isOpen, onClose, defaultCategory =
     requirements: ""
   });
   
+  const [phoneValue, setPhoneValue] = useState("");
+  
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -88,6 +90,7 @@ export default function ServiceRequestModal({ isOpen, onClose, defaultCategory =
       address: "",
       requirements: ""
     });
+    setPhoneValue("");
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -163,25 +166,24 @@ export default function ServiceRequestModal({ isOpen, onClose, defaultCategory =
               <Label htmlFor="customerPhone" className="text-sm font-semibold text-gray-700">Phone Number</Label>
               <input
                 type="text"
-                value={formData.customerPhone}
+                value={phoneValue}
                 onChange={(e) => {
-                  console.log('Phone input event:', e.target.value);
-                  setFormData(prev => ({ ...prev, customerPhone: e.target.value }));
-                }}
-                onInput={(e) => {
-                  console.log('Phone input event:', e.currentTarget.value);
-                  setFormData(prev => ({ ...prev, customerPhone: e.currentTarget.value }));
+                  const value = e.target.value;
+                  console.log('Phone value:', value);
+                  setPhoneValue(value);
+                  setFormData(prev => ({ ...prev, customerPhone: value }));
                 }}
                 placeholder="+254 7XX XXX XXX"
                 style={{
                   height: '40px',
                   width: '100%',
-                  border: '1px solid #ccc',
+                  border: '2px solid #000',
                   borderRadius: '4px',
                   padding: '8px 12px',
                   marginTop: '8px',
-                  fontSize: '14px',
-                  backgroundColor: 'white'
+                  fontSize: '16px',
+                  backgroundColor: 'white',
+                  color: 'black'
                 }}
                 autoComplete="new-password"
                 spellCheck="false"
