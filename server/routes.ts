@@ -1,4 +1,4 @@
-import type { Express, Request } from "express";
+import type { Express, Request, Response, NextFunction } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertCategorySchema, insertMaidSchema, insertBookingSchema, insertUserSchema, insertPageSchema } from "@shared/schema";
@@ -9,7 +9,7 @@ interface SessionRequest extends Request {
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Authentication routes
-  app.post("/api/auth/login", async (req: SessionRequest, res) => {
+  app.post("/api/auth/login", async (req: SessionRequest, res: Response) => {
     try {
       const { username, password } = req.body;
       const user = await storage.getUserByUsername(username);
@@ -26,7 +26,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/auth/logout", (req: SessionRequest, res) => {
+  app.post("/api/auth/logout", (req: SessionRequest, res: Response) => {
     req.session.destroy((err: any) => {
       if (err) {
         return res.status(500).json({ message: "Could not log out" });
@@ -35,7 +35,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     });
   });
 
-  app.get("/api/auth/me", async (req: SessionRequest, res) => {
+  app.get("/api/auth/me", async (req: SessionRequest, res: Response) => {
     if (!req.session.userId) {
       return res.status(401).json({ message: "Not authenticated" });
     }
@@ -49,7 +49,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Middleware to check authentication
-  const requireAuth = (req: SessionRequest, res: any, next: any) => {
+  const requireAuth = (req: SessionRequest, res: Response, next: NextFunction) => {
     if (!req.session.userId) {
       return res.status(401).json({ message: "Authentication required" });
     }
@@ -57,7 +57,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   };
 
   // Category routes
-  app.get("/api/categories", async (req, res) => {
+  app.get("/api/categories", async (req: Request, res: Response) => {
     try {
       const categories = await storage.getCategories();
       res.json(categories);
@@ -66,7 +66,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/categories", requireAuth, async (req, res) => {
+  app.post("/api/categories", requireAuth, async (req: Request, res: Response) => {
     try {
       const validatedData = insertCategorySchema.parse(req.body);
       const category = await storage.createCategory(validatedData);
@@ -76,7 +76,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.put("/api/categories/:id", requireAuth, async (req, res) => {
+  app.put("/api/categories/:id", requireAuth, async (req: Request, res: Response) => {
     try {
       const id = parseInt(req.params.id);
       const validatedData = insertCategorySchema.partial().parse(req.body);
@@ -92,7 +92,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.delete("/api/categories/:id", requireAuth, async (req, res) => {
+  app.delete("/api/categories/:id", requireAuth, async (req: Request, res: Response) => {
     try {
       const id = parseInt(req.params.id);
       const deleted = await storage.deleteCategory(id);
@@ -108,7 +108,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Maid routes
-  app.get("/api/maids", async (req, res) => {
+  app.get("/api/maids", async (req: Request, res: Response) => {
     try {
       const maids = await storage.getMaids();
       res.json(maids);
@@ -117,7 +117,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/maids", requireAuth, async (req, res) => {
+  app.post("/api/maids", requireAuth, async (req: Request, res: Response) => {
     try {
       const validatedData = insertMaidSchema.parse(req.body);
       const maid = await storage.createMaid(validatedData);
@@ -127,7 +127,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.put("/api/maids/:id", requireAuth, async (req, res) => {
+  app.put("/api/maids/:id", requireAuth, async (req: Request, res: Response) => {
     try {
       const id = parseInt(req.params.id);
       const validatedData = insertMaidSchema.partial().parse(req.body);
@@ -143,7 +143,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.delete("/api/maids/:id", requireAuth, async (req, res) => {
+  app.delete("/api/maids/:id", requireAuth, async (req: Request, res: Response) => {
     try {
       const id = parseInt(req.params.id);
       const deleted = await storage.deleteMaid(id);
@@ -159,7 +159,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Booking routes
-  app.get("/api/bookings", requireAuth, async (req, res) => {
+  app.get("/api/bookings", requireAuth, async (req: Request, res: Response) => {
     try {
       const bookings = await storage.getBookings();
       res.json(bookings);
@@ -168,7 +168,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/bookings", async (req, res) => {
+  app.post("/api/bookings", async (req: Request, res: Response) => {
     try {
       const validatedData = insertBookingSchema.parse(req.body);
       const booking = await storage.createBooking(validatedData);
@@ -178,7 +178,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.put("/api/bookings/:id/status", requireAuth, async (req, res) => {
+  app.put("/api/bookings/:id/status", requireAuth, async (req: Request, res: Response) => {
     try {
       const id = parseInt(req.params.id);
       const { status, assignedMaidId } = req.body;
@@ -195,7 +195,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/bookings/search", requireAuth, async (req, res) => {
+  app.get("/api/bookings/search", requireAuth, async (req: Request, res: Response) => {
     try {
       const { bookingNumber } = req.query;
       
@@ -216,7 +216,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Dashboard metrics
-  app.get("/api/dashboard/metrics", requireAuth, async (req, res) => {
+  app.get("/api/dashboard/metrics", requireAuth, async (req: Request, res: Response) => {
     try {
       const metrics = await storage.getDashboardMetrics();
       res.json(metrics);
@@ -226,7 +226,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Page routes
-  app.get("/api/pages/:slug", async (req, res) => {
+  app.get("/api/pages/:slug", async (req: Request, res: Response) => {
     try {
       const page = await storage.getPage(req.params.slug);
       
@@ -240,7 +240,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.put("/api/pages/:slug", requireAuth, async (req, res) => {
+  app.put("/api/pages/:slug", requireAuth, async (req: Request, res: Response) => {
     try {
       const validatedData = insertPageSchema.partial().parse(req.body);
       const page = await storage.updatePage(req.params.slug, validatedData);
