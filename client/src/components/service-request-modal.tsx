@@ -162,15 +162,17 @@ export default function ServiceRequestModal({ isOpen, onClose, defaultCategory =
             <div>
               <Label htmlFor="customerPhone" className="text-sm font-semibold text-gray-700">Phone Number</Label>
               <input
-                id="customerPhone"
-                name="customerPhone"
                 type="text"
                 value={formData.customerPhone}
-                onChange={handlePhoneChange}
-                onKeyDown={(e) => console.log('Key pressed:', e.key)}
-                onKeyPress={(e) => console.log('Key press:', e.key)}
+                onChange={(e) => {
+                  console.log('Phone input event:', e.target.value);
+                  setFormData(prev => ({ ...prev, customerPhone: e.target.value }));
+                }}
+                onInput={(e) => {
+                  console.log('Phone input event:', e.currentTarget.value);
+                  setFormData(prev => ({ ...prev, customerPhone: e.currentTarget.value }));
+                }}
                 placeholder="+254 7XX XXX XXX"
-                required
                 style={{
                   height: '40px',
                   width: '100%',
@@ -178,9 +180,11 @@ export default function ServiceRequestModal({ isOpen, onClose, defaultCategory =
                   borderRadius: '4px',
                   padding: '8px 12px',
                   marginTop: '8px',
-                  fontSize: '14px'
+                  fontSize: '14px',
+                  backgroundColor: 'white'
                 }}
-                autoComplete="off"
+                autoComplete="new-password"
+                spellCheck="false"
               />
             </div>
           </div>
