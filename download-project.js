@@ -3,7 +3,7 @@ import path from 'path';
 import archiver from 'archiver';
 
 function createProjectZip() {
-  const output = fs.createWriteStream('maidcare-pro-project.zip');
+  const output = fs.createWriteStream('maidcare-pro-project-with-guide.zip');
   const archive = archiver('zip', {
     zlib: { level: 9 } // Sets the compression level.
   });
@@ -11,7 +11,7 @@ function createProjectZip() {
   output.on('close', function() {
     console.log(archive.pointer() + ' total bytes');
     console.log('Project has been finalized and the output file descriptor has closed.');
-    console.log('Download created: maidcare-pro-project.zip');
+    console.log('Download created: maidcare-pro-project-with-guide.zip');
   });
 
   archive.on('error', function(err) {
